@@ -1,0 +1,50 @@
+from requests import Request, Session
+from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+import json
+
+url = ' https://api.cryptowat.ch/markets/binance/{c}/ohlc?periods=86400'.format(c = "USDT")
+parameters = {
+'exchange' : 'binance',
+'pair' : ' '
+
+}
+
+headers = {
+'Accepts': 'application/json',
+}
+
+session = Session()
+#session.headers.update(headers)
+
+try:
+    response = session.get(url, params=parameters)
+    data = json.loads(response.text)
+    print(data)
+except (ConnectionError, Timeout, TooManyRedirects) as e:
+    print(e)
+
+a = len(data['result']['86400'])
+
+Date = []
+for i in range (0,a,1):
+    Date.append(timechange(data['result']['86400'][i][0]))
+
+openprice = []
+for i in range (0,a,1):
+    openprice.append(data['result']['86400'][i][1])
+
+highprice = []
+for i in range (0,a,1):
+    highprice.append(data['result']['86400'][i][2])
+
+lowprice = []
+for i in range (0,a,1):
+    lowprice.append(data['result']['86400'][i][3])
+
+closeprice = []
+for i in range (0,a,1):
+    closeprice.append(data['result']['86400'][i][4])
+
+volume = []
+for i in range (0,a,1):
+    volume.append(data['result']['86400'][i][5])
