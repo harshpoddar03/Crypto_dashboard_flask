@@ -158,7 +158,6 @@ def change():
         pairlist.append(i)
 
   
-
    from requests import Request, Session
    from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
    import json
@@ -166,7 +165,7 @@ def change():
    url = ' https://api.cryptowat.ch/markets/binance/{c}/ohlc?periods=86400'.format(c = coin)
    parameters = {
   'exchange' : 'binance',
-  'pair' : ' '
+  'pair' : ' ' 
     
    }
 
@@ -183,6 +182,35 @@ def change():
       #print(data)
    except (ConnectionError, Timeout, TooManyRedirects) as e:
       print(e)
+
+
+   if (data['error'] == 'Instrument not found'):
+
+      from requests import Request, Session
+      from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+      import json
+
+      url = ' https://api.cryptowat.ch/markets/binance/binance-{c}/ohlc?periods=86400'.format(c = coin)
+      parameters = {
+      'exchange' : 'binance',
+      'pair' : ' '
+      
+      }
+
+      headers = {
+      'Accepts': 'application/json',
+      }
+
+      session1 = Session()
+      #session.headers.update(headers)
+
+      try:
+         response = session1.get(url, params=parameters)
+         data = json.loads(response.text)
+         #print(data)
+      except (ConnectionError, Timeout, TooManyRedirects) as e:
+         print(e)
+
 
    a = len(data['result']['86400'])
 
@@ -249,7 +277,7 @@ def change():
             vol_buy.append(float(vol[i]))
             spent.append(float(spent_gain[i]))
 
-         else:
+         elif (mode[i] =="SELL"):
             sell_date.append(date[i])
             sell_price.append(float(pop[i]))
             vol_sell.append(float(vol[i]))
@@ -258,18 +286,28 @@ def change():
 
 
    def listsize(l):
+         new = []
          mini = min(l)
          maxi = max(l)
-         new = []
-         for i in l:
-            new.append((i-mini)/(maxi-mini)*50)
-         return (new)
+         if (mini == maxi):
+            new.append(mini)
+            return (new)   
+         else:           
+            for i in l:
+               new.append((i-mini)/(maxi-mini)*50)
+            return (new)
       
-
+   
    vol_buysize=listsize(vol_buy)
-   vol_sellsize=listsize(vol_sell)
+   if (vol_sell == []):
+      vol_sellsize = [0]
+      gainsize = [0]
+   else:
+      vol_sellsize=listsize(vol_sell)
+      gainsize =listsize(gain)
+
    spentsize = listsize(spent)
-   gainsize =listsize(gain)
+   
 
    if (option == "Price History"):
 
