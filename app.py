@@ -183,8 +183,10 @@ def change():
    except (ConnectionError, Timeout, TooManyRedirects) as e:
       print(e)
 
+   datakey = data.keys()
+   datakeylist = list(datakey)
 
-   if (data['error'] == 'Instrument not found'):
+   if (datakeylist[0] == 'error'):
 
       from requests import Request, Session
       from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
