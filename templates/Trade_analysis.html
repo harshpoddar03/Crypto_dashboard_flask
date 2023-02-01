@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <link rel="stylesheet"  href="static/mystyle.css" />
+    <link rel="stylesheet"  href="/static/mystyle2.css" />
   </head>
  
  
@@ -18,7 +18,7 @@
           </a>
         </li>
         <li>
-          <a href ="/">
+          <a href ="#">
             <span class="icon"><ion-icon name="analytics-outline"></ion-icon></span>
             <span class ="title">Graph</span>
           </a>
@@ -26,15 +26,12 @@
         <li>
           <a href ="#">
             <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-            <span class ="title">Trade Analysis</span>
+            <span class ="title"> Trade Analysis</span>
           </a>
         </li>
       </ul>
     </div>
    </div>
-
-
-
 
    <div class="main">
     <div class="topbar">
@@ -45,11 +42,11 @@
     </div>
    </div>
 
-   
- 
-  <form method="post" class ="dropdown1" action="/dash/graph" >
+
+   <form method="post" class ="dropdown1" action="/dash/graph" >
     <label for="type">Choose the Coin:</label>
     <select name="coins" id="coins">
+      <option value="{{coin}}" selected disabled hidden>{{coin}}</option>
       {% for k in pairlist %} 
         <option value="{{k}}">{{k}}</option>
       {% endfor %}
@@ -58,16 +55,14 @@
     <br>
     <label for="type">Choose the type:</label>
     <select name="type" id="type">
+        <option value="{{option}}" selected disabled hidden>{{option}}</option>
         <option value="Price History">Price History</option>
         <option value="Transaction History">Transaction History</option>
         <option value="Transaction Volume">Transaction Volume</option>
     </select>
     <input type="submit" name="next" value="Next">
   </form>
-  <div class="stats">
-    <h1> Total currencies : {{totalcoins}} </h1>
-    <h1> Total amount: {{totalamount}}</h1>
- </div>
+
   <script>
 
     const coin = document.getElementById('coins');
@@ -81,43 +76,3 @@
     }
 
   </script>
-
-
-    <div id='chart' class='chart'”></div>
-    <p>{{figure}}</p>
-
-    
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
-
-    <script>
-
-      // add hovered class  in the selected list items basically add a class in already existing element
-  
-      let list = document.querySelectorAll('.navigation li');
-  
-      function activeLink(){
-        list.forEach((item) =>
-        item.classList.remove('hovered'));
-        this.classList.add('hovered');
-      }
-  
-      list.forEach((item) =>
-      item.addEventListener('mouseover',activeLink));
-  
-      
-  
-  
-    </script>
-  </body>
-  
-  
-  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-  <script type='text/javascript'>
-    var graphs = {{ graphJSON | safe}};
-    Plotly.plot('chart',graphs,{});
-  </script>
-  
-</html>

@@ -287,6 +287,12 @@ def change():
 
 
 
+   totalamount = sum(spent) - sum(gain)
+   totalcoins = sum(vol_buy) - sum(vol_sell)
+   totalamount = round(totalamount,4)
+   totalcoins = round(totalcoins,4)
+
+
    def listsize(l):
          new = []
          mini = min(l)
@@ -480,7 +486,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option)
+   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins)
 
 
 

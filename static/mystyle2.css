@@ -158,9 +158,23 @@ body {
 
 
 .chart {
-    margin-top: 300px;
+    margin-top: 100px;
     margin-left: 300px;
 }
 
+
+
+.stats{
+
+    margin-left: 400px;
+    margin-top: 100px;
+    height: 200px;
+    max-width: 700px;
+    background-color: white;
+}
+
+#stats h1 {
+    color: aqua;
+}
 
 
