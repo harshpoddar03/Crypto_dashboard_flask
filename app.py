@@ -121,9 +121,10 @@ def notdash():
 
 
 
-@app.route('/dash/graph',methods = ["post"]) 
+@app.route('/dash/graph',methods = ["get","post"]) 
 
 def change():
+
 
    coin = request.form.get("coins")
    print(coin)
@@ -287,11 +288,15 @@ def change():
 
 
 
-   totalamount = sum(spent) - sum(gain)
-   totalcoins = sum(vol_buy) - sum(vol_sell)
+   totalamount = abs(sum(spent) - sum(gain))
+   totalcoins = abs(sum(vol_buy) - sum(vol_sell))
    totalamount = round(totalamount,4)
    totalcoins = round(totalcoins,4)
 
+
+   l = len(closeprice)
+
+   currentprice = closeprice[l-1]
 
    def listsize(l):
          new = []
@@ -486,7 +491,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins)
+   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice)
 
 
 
