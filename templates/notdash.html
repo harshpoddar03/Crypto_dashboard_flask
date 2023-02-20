@@ -24,7 +24,7 @@
           </a>
         </li>
         <li>
-          <a href ="#">
+          <a href ="/dash/trade">
             <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
             <span class ="title">Trade Analysis</span>
           </a>
@@ -47,27 +47,7 @@
 
    
  
-  <form method="post" class ="dropdown1" action="/dash/graph" >
-    <label for="type">Choose the Coin:</label>
-    <select name="coins" id="coins">
-      {% for k in pairlist %} 
-        <option value="{{k}}">{{k}}</option>
-      {% endfor %}
-    </select>
   
-    <br>
-    <label for="type">Choose the type:</label>
-    <select name="type" id="type">
-        <option value="Price History">Price History</option>
-        <option value="Transaction History">Transaction History</option>
-        <option value="Transaction Volume">Transaction Volume</option>
-    </select>
-    <input type="submit" name="next" value="Next">
-  </form>
-  <div class="stats">
-    <h1> Total currencies : {{totalcoins}} </h1>
-    <h1> Total amount: {{totalamount}}</h1>
- </div>
   <script>
 
     const coin = document.getElementById('coins');
@@ -83,9 +63,6 @@
   </script>
 
 
-    <div id='chart' class='chart'”></div>
-    <p>{{figure}}</p>
-
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -93,6 +70,25 @@
 
 
     <script>
+
+      //MenuToggle
+      let toggle = document.querySelector('.toggle')
+      let navigation = document.querySelector('.navigation')
+      let main = document.querySelector('.main')
+
+
+ 
+
+
+      toggle.onclick = function(){
+        navigation.classList.toggle('active')
+        main.classList.toggle('active')
+
+
+      }
+
+
+
 
       // add hovered class  in the selected list items basically add a class in already existing element
   
@@ -113,11 +109,5 @@
     </script>
   </body>
   
-  
-  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-  <script type='text/javascript'>
-    var graphs = {{ graphJSON | safe}};
-    Plotly.plot('chart',graphs,{});
-  </script>
   
 </html>

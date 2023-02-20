@@ -125,10 +125,18 @@ def notdash():
 
 def change():
 
+   default_coin = "ADAUPUSDT"
+   default_type = "Price History"
+
+
 
    coin = request.form.get("coins")
    print(coin)
    option = request.form.get("type")
+
+   if ((coin == None) or (option == None)):
+      coin = default_coin
+      option = default_type
 
 
    def timechange(time):
@@ -494,6 +502,100 @@ def change():
    return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice)
 
 
+@app.route('/dash/trade',methods = ["get","post"]) 
+
+
+def trade():
+
+   
+   coin = request.form.get("coins")
+   print(coin)
+   option = request.form.get("type")
+
+   def timechange(time):
+      """changes unix format to datetime format
+
+   Args:
+      time (int): time
+   """
+      from datetime import datetime
+      # if you encounter a "year is out of range" error the timestamp
+      # may be in milliseconds, try `ts /= 1000` in that case
+      # return(datetime.utcfromtimestamp(time).strftime('%d-%m-%Y'))
+      return(datetime.utcfromtimestamp(time))
+
+   import pandas as pd
+   k = pd.read_csv('./Crypto_analysis_dashboard/Analysis/Spot.csv')
+
+
+   totalpairlist = k.Pair.tolist()
+
+
+   pairlist = []
+
+   for i in totalpairlist:
+      if i in pairlist:
+         continue
+      else:
+         pairlist.append(i)
+
+
+   from requests import Request, Session
+   from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+   import json
+
+   url = ' https://api.cryptowat.ch/markets/binance/{c}/ohlc?periods=86400'.format(c = coin)
+   parameters = {
+      'exchange' : 'binance',
+      'pair' : ' ' 
+   
+   }
+
+   headers = {
+   'Accepts': 'application/json',
+   }
+
+   session = Session()
+   #session.headers.update(headers)
+
+   try:
+      response = session.get(url, params=parameters)
+      data = json.loads(response.text)
+      #print(data)
+   except (ConnectionError, Timeout, TooManyRedirects) as e:
+      print(e)
+
+   datakey = data.keys()
+   datakeylist = list(datakey)
+
+   if (datakeylist[0] == 'error'):
+
+      from requests import Request, Session
+      from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+      import json
+
+      url = ' https://api.cryptowat.ch/markets/binance/binance-{c}/ohlc?periods=86400'.format(c = coin)
+      parameters = {
+      'exchange' : 'binance',
+      'pair' : ' '
+      
+      }
+
+      headers = {
+      'Accepts': 'application/json',
+      }
+
+      session1 = Session()
+      #session.headers.update(headers)
+
+      try:
+         response = session1.get(url, params=parameters)
+         data = json.loads(response.text)
+         #print(data)
+      except (ConnectionError, Timeout, TooManyRedirects) as e:
+         print(e)
+
+   return render_template('Trade_analysis.html',pairlist=pairlist,coin=coin,option=option)   
 
 
 

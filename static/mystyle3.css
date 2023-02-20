@@ -181,16 +181,8 @@ div.submit{
 }
 
 
-.chart {
-    margin-top: 100px;
-    margin-left: 300px;
-    border-radius: 20px;
-    transition: 0.5s;
-}
 
-.chart.active{
-    margin-left: 200px;
-}
+
 
 
 
@@ -205,58 +197,6 @@ div.data{
 
 
 
-
-
-
-
-
-div.child{
-    width: 50%;
-}
-
-div.child.one{
-
-    margin-left: 350px;
-    margin-top: 100px;
-    height: 200px;
-    max-width: 500px;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
-    position: relative;
-    color: #287bff;
-    transition: 0.5s;
-
-}
-
-div.child.one h1{
-    margin-top: 10px;
-    margin-left: 40px;
-}
-
-div.child.one.active{
-    margin-left: 200px;
-}
-
-
-
-
-div.child.two{
-    max-width: 500px;
-    background-color: white;
-    height: 200px;
-    margin-left: 50px;
-    margin-top: 100px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
-    border-radius: 20px;
-}
-
-div.child.two h1{
-    margin-top: 15px;
-    margin-left: 20px;
-    color: #287bff;
-
-}
 
 .main{
 

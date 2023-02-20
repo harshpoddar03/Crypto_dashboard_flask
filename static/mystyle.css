@@ -41,6 +41,11 @@ body {
     overflow: hidden;
 
 }
+
+.navigation.active{
+
+    width: 80px ;    
+}
 .navigation ul
 {
     position: absolute;
@@ -66,7 +71,7 @@ body {
 .navigation ul li:hover,
 .navigation ul li.hovered
 {
-    background:var(--white);
+    background:beige;
 }
 
 .navigation ul li a{
@@ -123,7 +128,7 @@ body {
     height: 50px;
     background: transparent;
     border-radius: 50%;
-    box-shadow: 35px 35px 0 10px var(--white);
+    box-shadow: 35px 35px 0 10px beige;
     pointer-events: none;
 
 
@@ -140,7 +145,7 @@ body {
     height: 50px;
     background: transparent;
     border-radius: 50%;
-    box-shadow: 35px -35px 0 10px var(--white);
+    box-shadow: 35px -35px 0 10px beige;
     pointer-events: none;
 
 }
@@ -157,18 +162,33 @@ body {
 }
 
 
-.chart {
-    margin-top: 100px;
-    margin-left: 300px;
+
+.main{
+
+    position: relative;
+    width: calc(100% - 100px);
+    Left: 300px;
+    min-height: 5vh;
+    transition: 0.5s;
+    background-color: beige;
+}
+.main.active{
+    width: calc(100% - 80px);
+    Left: 80px;
+
+}
+
+.toggle{
+
+    position: relative;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5em;
+    cursor: pointer;
 }
 
 
-
-.stats{
-
-    margin-left: 400px;
-    margin-top: 100px;
-    height: 100px;
-    max-width: 500px;
-    background-color: white;
-}
