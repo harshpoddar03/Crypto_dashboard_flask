@@ -242,7 +242,7 @@ div.child.one.active{
 
 
 div.child.two{
-    max-width: 500px;
+    max-width: 550px;
     background-color: white;
     height: 200px;
     margin-left: 50px;
@@ -256,6 +256,11 @@ div.child.two h1{
     margin-left: 20px;
     color: #287bff;
 
+}
+
+div.child.two h1,div.child.two h2 {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .main{

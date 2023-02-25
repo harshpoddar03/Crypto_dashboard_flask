@@ -6,7 +6,7 @@
   </head>
  
  
-
+  
   <body>
    <div class="container">
     <div class="navigation">
@@ -42,7 +42,11 @@
       </div>
    </div>
   </div>
- 
+  <script>
+
+  const changeprice = {{ changeprice }} ;
+
+  </script>
   <form method="post" class ="dropdown1" action="/dash/graph" >
     <div class = "dropdown one">
       <label for="type">Choose the Coin:</label>
@@ -74,7 +78,14 @@
     <h1 class="amount"> Total amount: {{totalamount}}</h1>
  </div>
   <div class="child two">
-    <h1 class="Price"> Current Price : {{currentprice}}</h1>
+    <h1 class="Price"> Current Price : {{currentprice}} </h1>
+    {% if changeprice < 0 %}
+    <h2 class="Change" style="color: red;">({{changeprice}}%)</h2>
+    {% else %}
+    <h2 class="Change" style="color: rgb(56, 230, 56);"> (+{{changeprice}}%)</h2>
+    {% endif %}
+
+
   </div>
  </div>
 

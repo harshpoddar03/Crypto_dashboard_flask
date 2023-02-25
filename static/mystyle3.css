@@ -183,7 +183,19 @@ div.submit{
 
 
 
+.trade_analysis{
 
+    margin-left: 100px;
+    margin-top: 60px;
+    height: 500px;
+    max-width: 1350px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    position: relative;
+    color: #287bff;
+    transition: 0.5s;
+}
 
 
 

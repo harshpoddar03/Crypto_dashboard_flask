@@ -283,6 +283,7 @@ def change():
    for i in range(0,len(mode),1):
       if (pair[i] == coin ):
          if (mode[i] == "BUY"):
+            pop[i] = pop[i].replace(',', '')
             buy_date.append(date[i])
             buy_price.append(float(pop[i]))
             vol_buy.append(float(vol[i]))
@@ -305,7 +306,10 @@ def change():
    l = len(closeprice)
 
    currentprice = closeprice[l-1]
+   previousdayprice = closeprice[l-2]
 
+   changeprice = (currentprice-previousdayprice)/(previousdayprice)*100
+   changeprice = round(changeprice,2)
    def listsize(l):
          new = []
          mini = min(l)
@@ -499,7 +503,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice)
+   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice)
 
 
 @app.route('/dash/trade',methods = ["get","post"]) 
