@@ -150,7 +150,7 @@ body {
 
 }
 .dropdown1{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-left: 300px;
     margin-bottom: 0px;
     
@@ -159,6 +159,11 @@ body {
 div.dropdown.one{
 
     margin-bottom: 25px;
+}
+
+.input_ma{
+    margin-top: 25px;
+    margin-left: 100px;
 }
 
 
@@ -262,6 +267,8 @@ div.child.two h1,div.child.two h2 {
     display: inline-block;
     margin-right: 10px;
 }
+
+
 
 .main{
 

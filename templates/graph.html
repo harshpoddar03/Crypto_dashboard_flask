@@ -68,6 +68,10 @@
        
       </select>
     </div>
+    <div class ="input_ma">
+      <label for="movingav">Enter week:</label>
+      <input type="number" id="movingav" name="movingav" value={{movingav}}><br>
+    </div>
     <div class="submit">
       <input type="submit" name="next" value="Next">
     </div>
@@ -93,11 +97,21 @@
 
     const coin = document.getElementById('coins');
     const t = document.getElementById('type');
+    const mova = document.getElementById('movingav');
+    var defaultVal = mova.defaultValue;
+    var currentVal = mova.value;
+
+    if (currentVal == None){
+      mova.value = defaultVal;
+    }
+    
     coin.addEventListener('change', change);
     t.addEventListener('change', change);
+    mova.addEventListener('change',change);
     function change(){
       console.log(coin.value);
       console.log(t.value);
+      console.log(mova.value);
 
     }
 

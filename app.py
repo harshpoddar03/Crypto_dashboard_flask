@@ -24,97 +24,8 @@ def new():
 
 def notdash():
    
-   def timechange(time):
-      """changes unix format to datetime format
 
-      Args:
-        time (int): time
-      """
-      from datetime import datetime
-      # if you encounter a "year is out of range" error the timestamp
-      # may be in milliseconds, try `ts /= 1000` in that case
-      # return(datetime.utcfromtimestamp(time).strftime('%d-%m-%Y'))
-      return(datetime.utcfromtimestamp(time))
-
-   import pandas as pd
-   k = pd.read_csv('./Crypto_analysis_dashboard/Analysis/Spot.csv')
-
-
-   totalpairlist = k.Pair.tolist()
-
-
-   pairlist = []
-
-   for i in totalpairlist:
-      if i in pairlist:
-         continue
-      else:
-        pairlist.append(i)
-
-  
-
-   from requests import Request, Session
-   from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
-   import json
-
-   url = ' https://api.cryptowat.ch/markets/binance/adausdt/ohlc?periods=86400'
-   parameters = {
-  'exchange' : 'binance',
-  'pair' : ' '
-    
-   }
-
-   headers = {
-   'Accepts': 'application/json',
-   }
-
-   session = Session()
-   #session.headers.update(headers)
-
-   try:
-      response = session.get(url, params=parameters)
-      data = json.loads(response.text)
-      #print(data)
-   except (ConnectionError, Timeout, TooManyRedirects) as e:
-      print(e)
-
-   a = len(data['result']['86400'])
-   Date = []
-   for i in range (0,a,1):
-      Date.append(timechange(data['result']['86400'][i][0]))
-
-   openprice = []
-   for i in range (0,a,1):
-      openprice.append(data['result']['86400'][i][1])
-
-   highprice = []
-   for i in range (0,a,1):
-      highprice.append(data['result']['86400'][i][2])
-
-   lowprice = []
-   for i in range (0,a,1):
-      lowprice.append(data['result']['86400'][i][3])
-
-   closeprice = []
-   for i in range (0,a,1):
-      closeprice.append(data['result']['86400'][i][4])
-
-   volume = []
-   for i in range (0,a,1):
-      volume.append(data['result']['86400'][i][5])
-
-
-
-
-   fig = go.Figure(data=[go.Candlestick(x=Date,
-                open=openprice, high=highprice,
-                low=lowprice, close=closeprice)
-                     ])
-
-   fig.update_layout(xaxis_rangeslider_visible=False)
-   graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-   return render_template('notdash.html', graphJSON=graphJSON,pairlist=pairlist)
+   return render_template('notdash.html')
 
 
 
@@ -127,16 +38,27 @@ def change():
 
    default_coin = "ADAUPUSDT"
    default_type = "Price History"
+   default_movingav  =  5
 
 
 
    coin = request.form.get("coins")
    print(coin)
    option = request.form.get("type")
+   temp = request.form.get("movingav")
+   print(temp)
+   if (temp != None):
+      movingav = int(temp)
+   else:
+      movingav = None
+
 
    if ((coin == None) or (option == None)):
       coin = default_coin
       option = default_type
+   
+   if (movingav == None):
+      movingav = default_movingav
 
 
    def timechange(time):
@@ -264,6 +186,10 @@ def change():
    for i in range (0,len(date)):
       date[i] = timechange(date[i])
 
+   closeprice_series = pd.Series(closeprice)
+   rolling_window = closeprice_series.rolling(window=movingav*7)
+   rolling_mean = rolling_window.mean()
+   rolling_mean_list = rolling_mean.tolist()
 
    buy_date = []
    buy_price =[]
@@ -338,8 +264,16 @@ def change():
 
       fig = go.Figure(data=[go.Candlestick(x=Date,
                 open=openprice, high=highprice,
-                low=lowprice, close=closeprice)
-                     ])
+                low=lowprice, close=closeprice)])
+
+      fig.add_trace(go.Scatter(
+        x=Date,
+        y=rolling_mean,
+        mode='lines',
+        line=dict(color='blue', width=2),
+        name=f"{movingav}-week Moving Average"
+    ))
+                     
 
       fig.update_layout(
       xaxis=dict(
@@ -381,8 +315,15 @@ def change():
             [go.Candlestick(x=Date,
                 open=openprice, high=highprice,
                 low=lowprice, close=closeprice,
-                name = "Candlestick")]
-      )
+                name = "Candlestick")])
+
+      fig.add_trace(go.Scatter(
+        x=Date,
+        y=rolling_mean,
+        mode='lines',
+        line=dict(color='blue', width=2),
+        name=f"{movingav}-week Moving Average"
+    ))
 
       fig.add_trace(
 
@@ -446,9 +387,16 @@ def change():
          [go.Candlestick(x=Date,
                 open=openprice, high=highprice,
                 low=lowprice, close=closeprice,
-                name = "Candlestick")]
-         )
-
+                name = "Candlestick")
+                ])
+         
+      fig.add_trace(go.Scatter(
+        x=Date,
+        y=rolling_mean,
+        mode='lines',
+        line=dict(color='blue', width=2),
+        name=f"{movingav}-week Moving Average"
+    ))
       fig.add_trace(
 
       go.Scatter(x=buy_date,
@@ -503,7 +451,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice)
+   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice,movingav=movingav)
 
 
 @app.route('/dash/trade',methods = ["get","post"]) 
