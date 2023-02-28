@@ -13,19 +13,19 @@
       <ul>
         <li>
           <a href ="#">
-            <span class="icon"><ion-icon name="logo-bitcoin"></ion-icon></span>
+            <div class="icon"><ion-icon name="logo-bitcoin" class ="bitcoin_icon"></ion-icon></div>
             <span class ="title">Crypto analysis</span>
           </a>
         </li>
         <li>
           <a href ="/dash">
-            <span class="icon"><ion-icon name="analytics-outline"></ion-icon></span>
+            <div class="icon"><ion-icon name="analytics-outline" class ="graph_icon"></ion-icon></div>
             <span class ="title">Graph</span>
           </a>
         </li>
         <li>
           <a href ="/dash/trade">
-            <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+            <div class="icon"><ion-icon name="bar-chart-outline" class = "bar_icon"></ion-icon></div>
             <span class ="title"> Trade Analysis</span>
           </a>
         </li>
@@ -84,9 +84,9 @@
   <div class="child two">
     <h1 class="Price"> Current Price : {{currentprice}} </h1>
     {% if changeprice < 0 %}
-    <h2 class="Change" style="color: red;">({{changeprice}}%)</h2>
+    <h2 class="Change" style="color: red;">({{changeprice}}%) <ion-icon name="caret-down-outline"></ion-icon></h2>
     {% else %}
-    <h2 class="Change" style="color: rgb(56, 230, 56);"> (+{{changeprice}}%)</h2>
+    <h2 class="Change" style="color: rgb(56, 230, 56);"> (+{{changeprice}}%) <ion-icon name="caret-up-outline"></ion-icon></h2>
     {% endif %}
 
 
