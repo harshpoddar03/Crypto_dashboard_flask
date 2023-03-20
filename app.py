@@ -46,6 +46,7 @@ def change():
    print(coin)
    option = request.form.get("type")
    temp = request.form.get("movingav")
+
    print(temp)
    if (temp != None):
       movingav = int(temp)
@@ -459,10 +460,15 @@ def change():
 
 def trade():
 
+
+   default_coin = "ADAUPUSDT"
+
    
    coin = request.form.get("coins")
    print(coin)
-   option = request.form.get("type")
+
+   if ((coin == None)):
+      coin = default_coin
 
    def timechange(time):
       """changes unix format to datetime format
@@ -496,7 +502,7 @@ def trade():
    from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
    import json
 
-   url = ' https://api.cryptowat.ch/markets/binance/{c}/ohlc?periods=86400'.format(c = coin)
+   url = ' https://api.cryptowat.ch/markets/binance/{c}/ohlc?periods=86400'.format(c = coin) 
    parameters = {
       'exchange' : 'binance',
       'pair' : ' ' 
@@ -522,9 +528,6 @@ def trade():
 
    if (datakeylist[0] == 'error'):
 
-      from requests import Request, Session
-      from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
-      import json
 
       url = ' https://api.cryptowat.ch/markets/binance/binance-{c}/ohlc?periods=86400'.format(c = coin)
       parameters = {
@@ -547,7 +550,148 @@ def trade():
       except (ConnectionError, Timeout, TooManyRedirects) as e:
          print(e)
 
-   return render_template('Trade_analysis.html',pairlist=pairlist,coin=coin,option=option)   
+
+
+   a = len(data['result']['86400'])
+
+   Date = []
+   for i in range (0,a,1):
+      Date.append(timechange(data['result']['86400'][i][0]))
+
+   openprice = []
+   for i in range (0,a,1):
+      openprice.append(data['result']['86400'][i][1])
+
+   highprice = []
+   for i in range (0,a,1):
+      highprice.append(data['result']['86400'][i][2])
+
+   lowprice = []
+   for i in range (0,a,1):
+      lowprice.append(data['result']['86400'][i][3])
+
+   closeprice = []
+   for i in range (0,a,1):
+      closeprice.append(data['result']['86400'][i][4])
+
+   volume = []
+   for i in range (0,a,1):
+      volume.append(data['result']['86400'][i][5])
+
+   dt = pd.read_csv('Spot2.csv')
+
+   date=dt.Date.tolist()
+
+   def datetounix(a):
+      import calendar, time;
+      return(calendar.timegm(time.strptime(a, '%d-%m-%Y')))
+
+   for i in range (0,len(date)):
+      date[i] = datetounix(date[i])
+
+
+   for i in range (0,len(date)):
+      date[i] = timechange(date[i])
+
+
+   buy_date = []
+   buy_price =[]
+   sell_date = []
+   sell_price = []
+   vol_buy=[]
+   vol_sell=[]
+   spent = []
+   gain =[]
+
+   pair = dt.Pair.tolist() 
+   mode= dt.Buy_Sell.tolist()
+   pop = dt.Price.tolist()
+   vol = dt.Volume.tolist()
+   spent_gain = dt.Spent_Gain.tolist()
+
+   for i in range(0,len(mode),1):
+      if (pair[i] == coin ):
+         if (mode[i] == "BUY"):
+            pop[i] = pop[i].replace(',', '')
+            buy_date.append(date[i])
+            buy_price.append(float(pop[i]))
+            vol_buy.append(float(vol[i]))
+            spent.append(float(spent_gain[i]))
+
+         elif (mode[i] =="SELL"):
+            sell_date.append(date[i])
+            sell_price.append(float(pop[i]))
+            vol_sell.append(float(vol[i]))
+            gain.append(float(spent_gain[i]))
+
+
+
+
+   sum_volbuy = round(sum(vol_buy),4)
+   sum_volsell = round(sum(vol_sell),4)
+   sum_amountbuy = round(sum(spent),4)
+   sum_amountsell = round(sum(gain),4)
+
+   if ((sum_amountsell or sum_volsell) == 0):
+      average_buy = round(sum_volbuy/sum_amountbuy,4)
+      average_sell =  "-"
+   else:
+      average_buy = round(sum_volbuy/sum_amountbuy,4)
+      average_sell = round(sum_volsell/sum_amountsell,4)
+
+      
+
+   
+
+
+
+   totalamount = abs(sum_amountbuy - sum_amountsell)
+   totalcoins = abs(sum_volbuy - sum_volsell)
+   totalamount = round(totalamount,4)
+   totalcoins = round(totalcoins,4)
+
+   current_position = round(sum_volbuy - sum_volsell,4)
+   total_position_cost = round(sum_amountbuy - sum_amountsell,4)
+   average_postion = round(current_position/total_position_cost,4)
+
+
+
+
+   l = len(closeprice)
+
+   currentprice = closeprice[l-1]
+   previousdayprice = closeprice[l-2]
+
+   changeprice = (currentprice-previousdayprice)/(previousdayprice)*100
+   changeprice = round(changeprice,2)
+   def listsize(l):
+         new = []
+         mini = min(l)
+         maxi = max(l)
+         if (mini == maxi):
+            new.append(mini)
+            return (new)   
+         else:           
+            for i in l:
+               new.append((i-mini)/(maxi-mini)*50)
+            return (new)
+      
+   
+   vol_buysize=listsize(vol_buy)
+   if (vol_sell == []):
+      vol_sellsize = [0]
+      gainsize = [0]
+   else:
+      vol_sellsize=listsize(vol_sell)
+      gainsize =listsize(gain)
+
+   spentsize = listsize(spent)
+
+
+      
+
+   return render_template('Trade_analysis.html',pairlist=pairlist,coin=coin,sum_volbuy = sum_volbuy,sum_volsell = sum_volsell,sum_amountsell = sum_amountsell,sum_amountbuy = sum_amountbuy,average_buy = average_buy,average_sell=average_sell,current_position=current_position,total_position_cost=total_position_cost,average_postion=average_postion)
+      
 
 
 

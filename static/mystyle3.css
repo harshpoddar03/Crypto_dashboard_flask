@@ -150,7 +150,7 @@ body {
 
 }
 .dropdown1{
-    margin-top: 100px;
+    margin-top: 60px;
     margin-left: 300px;
     margin-bottom: 0px;
     
@@ -168,11 +168,7 @@ div.dropdown{
     
 }
 
-div.submit{
-    margin-left: 100px;
-    margin-top: 10px;
 
-}
 .logo{
     margin-bottom: 100px;
     margin-left: 100px;
@@ -187,7 +183,7 @@ div.submit{
 
     margin-left: 100px;
     margin-top: 60px;
-    height: 500px;
+    height: 520px;
     max-width: 1350px;
     background-color: white;
     border-radius: 20px;
@@ -242,3 +238,68 @@ div.data{
 div.icon{
     margin-top: 7px;
 }
+
+div.dates{
+    display: flex;
+    
+}
+
+div.start_date{
+    margin-top: 20px;
+    margin-left: 100px;
+}
+
+div.end_date{
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+div.heading{
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+div.heading h2{
+    margin-top: 10px;
+}
+
+div.submit{
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
+input[type=text] {
+    padding: 5px;
+    border: 2px solid #cccccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  input[type=text]:focus {
+    border-color: black;
+  }
+
+  input[type=submit] {
+    padding: 7px 25px;
+    background: #afe1ff;
+    border: 0 none;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 20px;
+    max-width: 25%;
+  }
+
+
+select {
+    width: 15%;
+    padding:10px;
+    border-radius:10px;
+  }
+
+  input[type=date]{
+    width: 70%;
+    padding: 10px 20px;
+    border-radius:10px;
+    border-width: thin;
+
+  }

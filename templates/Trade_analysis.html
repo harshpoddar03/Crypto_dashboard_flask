@@ -53,26 +53,39 @@
         {% endfor %}
       </select>
     </div>
-    <div class = "dropdown two">
-      <label for="type">Choose the type:</label>
-      <select name="type" id="type">
-        
-          <option value="default" selected disabled hidden>Choose a type</option>
-          <option value="Price History" {% if option == 'Price History' %}selected{% endif %}>Price History</option>
-          <option value="Transaction History" {% if option == 'Transaction History' %}selected{% endif %}>Transaction History</option>
-          <option value="Transaction Volume" {% if option == 'Transaction Volume' %}selected{% endif %} >Transaction Volume</option>
-       
-      </select>
+
+    <div class = "dates">
+      <div class = "start_date">
+        <label for="Start">Start Date :</label>
+        <input type="date" id="start" name="start">
+      </div>
+
+      <div class ="end_date">
+        <label for="end">End Date :</label>
+        <input type="date" id="end" name="end">
+      </div>
     </div>
-    <div class="submit">
-      <input type="submit" name="next" value="Next">
+    <div class = "submit">
+        <input type="submit" name="next" value="Next">
     </div>
+  
 
 
   <div class="trade_analysis">
-
-    <h1> First Trade</h1>
-
+    <div class = "heading">
+      <br>
+      <h2 class = "first">Sum Buy Amount : {{sum_volbuy}} {{coin}}</h2>
+      <h2>Sum Buy Total : {{sum_amountbuy}} USDT </h2>
+      <h2>Average Buy Price : {{average_buy}} USDT/{{coin}} </h2>
+      <br>
+      <h2>Sum Sell Amount : {{sum_volsell}} {{coin}} </h2>
+      <h2>Sum Sell Total : {{sum_amountsell}} USDT</h2>
+      <h2>Average Sell Price : {{average_sell}} USDT/{{coin}} </h2>
+      <br>
+      <h2>Current Position : {{current_position}} {{coin}}</h2>
+      <h2>Total Postion Cost : {{total_position_cost}} USDT </h2>
+      <h2>Average Postion Cost : {{average_postion}} USDT/{{coin}}</h2>
+    </div>
   </div>
 
   <script>
