@@ -462,10 +462,16 @@ def trade():
 
 
    default_coin = "ADAUPUSDT"
-
    
+   temp_sdate = request.form.get("sdate")
+   temp_edate = request.form.get("edate")
    coin = request.form.get("coins")
+
    print(coin)
+   
+
+
+
 
    if ((coin == None)):
       coin = default_coin
@@ -481,6 +487,19 @@ def trade():
       # may be in milliseconds, try `ts /= 1000` in that case
       # return(datetime.utcfromtimestamp(time).strftime('%d-%m-%Y'))
       return(datetime.utcfromtimestamp(time))
+
+
+
+   def datetounix(a):
+      import calendar, time;
+      return(calendar.timegm(time.strptime(a, '%d-%m-%Y')))
+
+   def datetimetostring(b):
+      import datetime
+      return(b.strftime('%d-%m-%Y'))
+
+
+
 
    import pandas as pd
    k = pd.read_csv('./Crypto_analysis_dashboard/Analysis/Spot.csv')
@@ -582,10 +601,22 @@ def trade():
 
    date=dt.Date.tolist()
 
+   Datetemp = []
+   for i in range (len(Date)):
+      Datetemp.append(datetimetostring(Date[i]))
+
+   date_len = len(Datetemp)
+   startdate_default = Datetemp[0]
+   enddate_default = Datetemp[date_len - 1]
+   
+   print(startdate_default)
+   print(enddate_default)
+
    def datetounix(a):
       import calendar, time;
       return(calendar.timegm(time.strptime(a, '%d-%m-%Y')))
 
+   
    for i in range (0,len(date)):
       date[i] = datetounix(date[i])
 
@@ -593,6 +624,24 @@ def trade():
    for i in range (0,len(date)):
       date[i] = timechange(date[i])
 
+  
+
+
+   if ((temp_edate and temp_sdate) == None):
+      sdate = startdate_default
+      edate = enddate_default
+   elif((temp_edate) == None):
+      edate = enddate_default
+      sdate = temp_sdate
+   elif((sdate) == None):
+      edate = temp_edate
+      sdate = startdate_default
+   
+   sdate = datetounix(sdate)
+   edate = datetounix(edate)
+
+   sdate = timechange(sdate)
+   edate = timechange(edate)
 
    buy_date = []
    buy_price =[]
@@ -690,7 +739,7 @@ def trade():
 
       
 
-   return render_template('Trade_analysis.html',pairlist=pairlist,coin=coin,sum_volbuy = sum_volbuy,sum_volsell = sum_volsell,sum_amountsell = sum_amountsell,sum_amountbuy = sum_amountbuy,average_buy = average_buy,average_sell=average_sell,current_position=current_position,total_position_cost=total_position_cost,average_postion=average_postion)
+   return render_template('Trade_analysis.html',pairlist=pairlist,coin=coin,sum_volbuy = sum_volbuy,sum_volsell = sum_volsell,sum_amountsell = sum_amountsell,sum_amountbuy = sum_amountbuy,average_buy = average_buy,average_sell=average_sell,current_position=current_position,total_position_cost=total_position_cost,average_postion=average_postion,edate=edate,sdate=sdate)
       
 
 
