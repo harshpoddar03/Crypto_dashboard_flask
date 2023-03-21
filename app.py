@@ -306,6 +306,7 @@ def change():
         type="date"
     )
                )
+      fig.update_layout(paper_bgcolor='rgba(0,0,0,0)')
 
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -377,6 +378,7 @@ def change():
         type="date"
          )
          )
+      fig.update_layout(paper_bgcolor='rgba(0,0,0,0)')
 
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -448,6 +450,7 @@ def change():
         type="date"
       )
          )
+      fig.update_layout(paper_bgcolor='rgba(0,0,0,0)')
 
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
@@ -609,12 +612,7 @@ def trade():
    startdate_default = Datetemp[0]
    enddate_default = Datetemp[date_len - 1]
    
-   print(startdate_default)
-   print(enddate_default)
-
-   def datetounix(a):
-      import calendar, time;
-      return(calendar.timegm(time.strptime(a, '%d-%m-%Y')))
+   
 
    
    for i in range (0,len(date)):
@@ -625,7 +623,6 @@ def trade():
       date[i] = timechange(date[i])
 
   
-
 
    if ((temp_edate and temp_sdate) == None):
       sdate = startdate_default
@@ -642,6 +639,8 @@ def trade():
 
    sdate = timechange(sdate)
    edate = timechange(edate)
+
+
 
    buy_date = []
    buy_price =[]

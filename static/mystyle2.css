@@ -187,14 +187,16 @@ div.submit{
 
 
 .chart {
-    margin-top: 100px;
-    margin-left: 300px;
+    margin-top: 90px;
+    margin-left: 70px;
     border-radius: 20px;
     transition: 0.5s;
+
 }
 
 .chart.active{
-    margin-left: 200px;
+    margin-left: 130px;
+    max-width: 90%;
 }
 
 
@@ -209,6 +211,22 @@ div.data{
 
 
 
+div.chartcss{
+    background-color: white;
+    margin-top: 90px;
+    margin-left: 300px;
+    border-radius: 20px;
+    transition: 0.5s;
+    height: 445px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+
+}
+
+.chartcss.active{
+    margin-left: 100px;
+    max-width: 93.5%;
+}
+
 
 
 
@@ -217,6 +235,7 @@ div.data{
 
 div.child{
     width: 50%;
+
 }
 
 div.child.one{
@@ -240,7 +259,7 @@ div.child.one h1{
 }
 
 div.child.one.active{
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
 
