@@ -57,17 +57,19 @@
     <div class = "dates">
       <div class = "start_date">
         <label for="Start">Start Date :</label>
-        <input type="date" id="start" name="start" value ={{sdate}}>
+        <input type="date" id="start" name="sdate" value ={{sdate}} >
       </div>
 
       <div class ="end_date">
         <label for="end">End Date :</label>
-        <input type="date" id="end" name="end" value ={{edate}}>
+        <input type="date" id="end" name="edate" value ={{edate}}>
       </div>
     </div>
+
     <div class = "submit">
         <input type="submit" name="next" value="Next">
     </div>
+  </form>
   
 
 
@@ -88,32 +90,27 @@
     </div>
   </div>
 
+
   <script>
 
     const coin = document.getElementById('coins');
     const sdate = document.getElementById('start');
     const edate = document.getElementById('end');
 
-    var defaultVal_Sdate = sdate.defaultValue;
-    var currentVal_Sdate = sdate.value
-
-    if (currentVal_Sdate == None){
-      sdate.value = defaultVal_Sdate;
-    }
-
     
-    var defaultVal_Edate = edate.defaultValue;
-    var currentVal_Edate = edate.value
-
-    if (currentVal_Edate == None){
-      edate.value = defaultVal_Edate;
-    }
-
     coin.addEventListener('change', change);
+    sdate.addEventListener('change', change);
+    edate.addEventListener('change', change);
+
+
+
+
     function change(){
+
+  
       console.log(coin.value);
-      console.log(sdate.value);
       console.log(edate.value);
+      console.log(sdate,value);
 
     }
 

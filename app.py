@@ -8,6 +8,11 @@ from flask import request
 app = Flask(__name__)
 app.debug = True
 
+from flask import session
+import secrets
+
+app.secret_key = 'd5fb8c4fa8bd46638dadc4e751e0d68d'
+
 
 
 
@@ -265,7 +270,7 @@ def change():
 
       fig = go.Figure(data=[go.Candlestick(x=Date,
                 open=openprice, high=highprice,
-                low=lowprice, close=closeprice)])
+                low=lowprice, close=closeprice,name="Candlestick")])
 
       fig.add_trace(go.Scatter(
         x=Date,
@@ -463,18 +468,30 @@ def change():
 
 def trade():
 
+   from flask import session
+   import secrets
+
+   app.secret_key = 'd5fb8c4fa8bd46638dadc4e751e0d68d'
+
+
+
 
    default_coin = "ADAUPUSDT"
+
+   session["prev_coin"] = session["prev_coin"]
    
    temp_sdate = request.form.get("sdate")
    temp_edate = request.form.get("edate")
    coin = request.form.get("coins")
 
-   print(coin)
+
+   if (coin != session["prev_coin"]):
+      temp_edate = None
+      temp_sdate = None
+
+
+   session["prev_coin"] = coin
    
-
-
-
 
    if ((coin == None)):
       coin = default_coin
@@ -496,6 +513,10 @@ def trade():
    def datetounix(a):
       import calendar, time;
       return(calendar.timegm(time.strptime(a, '%d-%m-%Y')))
+
+   def datetounixopp(a):
+      import calendar, time;
+      return(calendar.timegm(time.strptime(a, '%Y-%m-%d')))
 
    def datetimetostring(b):
       import datetime
@@ -612,7 +633,7 @@ def trade():
    startdate_default = Datetemp[0]
    enddate_default = Datetemp[date_len - 1]
    
-   
+
 
    
    for i in range (0,len(date)):
@@ -623,16 +644,31 @@ def trade():
       date[i] = timechange(date[i])
 
   
-
-   if ((temp_edate and temp_sdate) == None):
+   import datetime
+   
+   if (temp_edate is None and temp_sdate is None):
       sdate = startdate_default
       edate = enddate_default
-   elif((temp_edate) == None):
+
+   elif(temp_edate is None):
       edate = enddate_default
       sdate = temp_sdate
-   elif((sdate) == None):
+
+   elif(temp_sdate is None):
       edate = temp_edate
       sdate = startdate_default
+
+   elif((temp_edate is not None and temp_sdate is not None)) :
+   
+      temp_edate = datetounixopp(temp_edate)
+      temp_edate = timechange(temp_edate)
+      edate = datetimetostring(temp_edate)
+
+      temp_sdate = datetounixopp(temp_sdate)
+      temp_sdate = timechange(temp_sdate)
+      sdate = datetimetostring(temp_sdate)      
+      
+   
    
    sdate = datetounix(sdate)
    edate = datetounix(edate)
@@ -712,28 +748,7 @@ def trade():
 
    changeprice = (currentprice-previousdayprice)/(previousdayprice)*100
    changeprice = round(changeprice,2)
-   def listsize(l):
-         new = []
-         mini = min(l)
-         maxi = max(l)
-         if (mini == maxi):
-            new.append(mini)
-            return (new)   
-         else:           
-            for i in l:
-               new.append((i-mini)/(maxi-mini)*50)
-            return (new)
-      
-   
-   vol_buysize=listsize(vol_buy)
-   if (vol_sell == []):
-      vol_sellsize = [0]
-      gainsize = [0]
-   else:
-      vol_sellsize=listsize(vol_sell)
-      gainsize =listsize(gain)
 
-   spentsize = listsize(spent)
 
 
       

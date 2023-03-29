@@ -181,7 +181,7 @@ div.dropdown{
 
 .trade_analysis{
 
-    margin-left: 100px;
+    margin-left: 400px;
     margin-top: 60px;
     height: 520px;
     max-width: 1350px;
@@ -303,3 +303,5 @@ select {
     border-width: thin;
 
   }
+
+
