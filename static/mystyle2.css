@@ -386,9 +386,4 @@ div.parent{
 
 
 
-div.child.three h1 ,div.child.three h2 {
-    display: inline-block;
-    margin-right: 10px;
-}
-
 
