@@ -151,6 +151,19 @@ def change():
          print(e)
 
 
+
+   import currentprice_market
+
+   Keymax = currentprice_market.Key_max
+   Keymin = currentprice_market.Key_min
+
+   maxcoin_percentage = (currentprice_market.maxcoin_percentage)*100
+   mincoin_percentage = (currentprice_market.mincoin_percentage)*100
+
+   mincoin_percentage = round(mincoin_percentage,4)
+   maxcoin_percentage = round(maxcoin_percentage,4)
+
+
    a = len(data['result']['86400'])
 
    Date = []
@@ -460,7 +473,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice,movingav=movingav)
+   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice,movingav=movingav,Keymax=Keymax,Keymin=Keymin,maxcoin_percentage=maxcoin_percentage,mincoin_percentage=mincoin_percentage)
 
 
 @app.route('/dash/trade',methods = ["get","post"]) 

@@ -46,11 +46,14 @@
 
   const changeprice = {{ changeprice }} ;
 
+  
+
   </script>
+  <div class = "parent">
   <form method="post" class ="dropdown1" action="/dash/graph" >
-    <div class = "dropdown one">
-      <label for="type">Choose the Coin:</label>
-      <select name="coins" id="coins">
+      <div class = "dropdown one">
+        <label for="type">Choose the Coin:</label>
+        <select name="coins" id="coins">
 
         {% for k in pairlist %} 
           <option value="{{k}}" {% if coin == k %} selected {% endif %}> {{ k }} </option>
@@ -76,6 +79,22 @@
       <input type="submit" name="next" value="Next">
     </div>
   </form>
+
+    <div class = "current">
+      <h1 class = "one" style="margin-left: 100px;">Top/Least Performers</h1>
+      <br>
+       
+        <h1 style="display: inline; max-width: max-content; margin-left: 65px;">{{Keymax}}: </h1>
+        <h2 style="color: rgb(56, 230, 56); text-align: right; float: right; margin-right: 350px; margin-top: 5px;">{{maxcoin_percentage}}% <ion-icon name="caret-up-outline" style="max-width: 50px;"></ion-icon></h2>
+       <br>
+       
+        <h1 style="display: inline; max-width: max-content; margin-left: 60px;">{{Keymin}}: </h1>
+        <h2 style="color: red;text-align: right;float: right;margin-right: 350px;margin-top: 5px;"> {{mincoin_percentage}}% <ion-icon name="caret-down-outline" style="max-width: 50px;"></ion-icon></h2>
+       
+    </div>
+
+</div>
+
   <div class = "data">
   <div class="child one">
     <h1 class="currencies"> Total currencies : {{totalcoins}} </h1>
@@ -88,10 +107,10 @@
     {% else %}
     <h2 class="Change" style="color: rgb(56, 230, 56);"> (+{{changeprice}}%) <ion-icon name="caret-up-outline"></ion-icon></h2>
     {% endif %}
-
-
   </div>
  </div>
+
+
 
   <script>
 

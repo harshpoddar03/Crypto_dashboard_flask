@@ -153,6 +153,7 @@ body {
     margin-top: 50px;
     margin-left: 300px;
     margin-bottom: 0px;
+
     
 }
 
@@ -340,14 +341,54 @@ input[type=text] {
 
 
 select {
-    width: 15%;
     padding:10px;
     border-radius:10px;
   }
 
 input[type=number] {
-    width: 15%;
     padding:10px 20px;
     border-radius:10px;
     border-width: thin;
 }
+
+div.current{
+
+    max-width: 700px;
+    background-color: white;
+    height: 200px;
+    margin-left: 50px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+    margin-top: 50px;
+
+
+}
+
+div.current h1{
+    
+    color: #287bff;
+
+}
+
+div.submit{
+    max-width: 50%;
+}
+
+
+div.parent{
+    display: flex;
+}
+
+.parent :first-child{
+    width: 700px;
+}
+
+
+
+
+div.child.three h1 ,div.child.three h2 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
