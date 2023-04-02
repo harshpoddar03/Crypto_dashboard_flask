@@ -228,6 +228,17 @@ div.chartcss{
     max-width: 93.5%;
 }
 
+div.chartcss2{
+    background-color: white;
+    margin-top: 90px;
+    margin-left: 350px;
+    border-radius: 20px;
+    transition: 0.5s;
+    height: 450px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    max-width: 500px;
+
+}
 
 
 

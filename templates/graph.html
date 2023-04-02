@@ -85,11 +85,11 @@
       <br>
        
         <h1 style="display: inline; max-width: max-content; margin-left: 65px;">{{Keymax}}: </h1>
-        <h2 style="color: rgb(56, 230, 56); text-align: right; float: right; margin-right: 350px; margin-top: 5px;">{{maxcoin_percentage}}% <ion-icon name="caret-up-outline" style="max-width: 50px;"></ion-icon></h2>
+        <h2 style="color: rgb(56, 230, 56); text-align: right; float: right; margin-right: 250px; margin-top: 5px;">+{{maxcoin_percentage}}% <ion-icon name="caret-up-outline" style="max-width: 50px;"></ion-icon></h2>
        <br>
        
         <h1 style="display: inline; max-width: max-content; margin-left: 60px;">{{Keymin}}: </h1>
-        <h2 style="color: red;text-align: right;float: right;margin-right: 350px;margin-top: 5px;"> {{mincoin_percentage}}% <ion-icon name="caret-down-outline" style="max-width: 50px;"></ion-icon></h2>
+        <h2 style="color: red;text-align: right;float: right;margin-right: 250px;margin-top: 5px;"> {{mincoin_percentage}}% <ion-icon name="caret-down-outline" style="max-width: 50px;"></ion-icon></h2>
        
     </div>
 
@@ -136,11 +136,23 @@
 
   </script>
 
+
+    <div class ="chartcss2">
+      <div id='chart2' class='chart2'>
+        <p>{{figure}}</p>
+      </div>
+    </div>
+    
+
+
+
+
     <div class ="chartcss">
       <div id='chart' class='chart'>
         <p>{{figure}}</p>
       </div>
-    <div>
+    </div>
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -192,6 +204,12 @@
   
     </script>
   </body>
+
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+  <script type='text/javascript'>
+    var graphs2 = {{ graphJSON2 | safe}};
+    Plotly.plot('chart2',graphs2,{});
+  </script>
   
   
   <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>

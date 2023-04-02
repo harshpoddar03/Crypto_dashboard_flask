@@ -56,7 +56,7 @@ for i in key_list:
 for i in range(values_len):
     temp = coinlist[i].split("-")
     if(len(temp) > 2):
-        if (temp[2] == "future"):
+        if ((temp[1] == "perpetual") or temp[1] == 'quarterly'):
             coinlist[i] = temp[0]
 
     if(len(temp) == 2):
@@ -78,4 +78,4 @@ mincoin_percentage = round(coin_percentage[Key_min],4)
 
 
 
-
+print(coinlist)

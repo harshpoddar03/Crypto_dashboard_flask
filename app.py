@@ -154,8 +154,8 @@ def change():
 
    import currentprice_market
 
-   Keymax = currentprice_market.Key_max
-   Keymin = currentprice_market.Key_min
+   Keymax = (currentprice_market.Key_max).upper()
+   Keymin = (currentprice_market.Key_min).upper()
 
    maxcoin_percentage = (currentprice_market.maxcoin_percentage)*100
    mincoin_percentage = (currentprice_market.mincoin_percentage)*100
@@ -277,6 +277,18 @@ def change():
       gainsize =listsize(gain)
 
    spentsize = listsize(spent)
+
+
+   import plotly.graph_objects as go
+
+   labels = ['Spent','Gain']
+   values = [sum(spent),sum(gain)]
+
+   # Use `hole` to create a donut-like pie chart
+   fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=0.8)])
+   fig2.update_layout(paper_bgcolor='rgba(0,0,0,0)')
+   graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+
    
 
    if (option == "Price History"):
@@ -473,7 +485,7 @@ def change():
       graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    
 
-   return render_template('graph.html', graphJSON=graphJSON,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice,movingav=movingav,Keymax=Keymax,Keymin=Keymin,maxcoin_percentage=maxcoin_percentage,mincoin_percentage=mincoin_percentage)
+   return render_template('graph.html', graphJSON=graphJSON,graphJSON2=graphJSON2,pairlist=pairlist,coin=coin,option=option,totalamount = totalamount,totalcoins=totalcoins,currentprice=currentprice,changeprice=changeprice,movingav=movingav,Keymax=Keymax,Keymin=Keymin,maxcoin_percentage=maxcoin_percentage,mincoin_percentage=mincoin_percentage)
 
 
 @app.route('/dash/trade',methods = ["get","post"]) 
